@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tic toe</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            
+        }
+        .first {
+
+           background-color: rgb(246, 229, 207);
+            width: 210px;
+            height: 200px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 250px;
+        }
+
+        .second {
+            border: 2px solid rgb(151, 192, 151);
+            width: 65px;
+            height: 64px;
+            font-size: 50px;
+            text-align: center;
+        }
+        .winner{
+            font-size: 40px;
+            color: red;
+            margin: 10px;
+
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="first">
+        <div class="second"></div>
+        <div class="second"></div>
+        <div class="second"></div>
+        <div class="second"></div>
+        <div class="second"></div>
+        <div class="second"></div>
+        <div class="second"></div>
+        <div class="second"></div>
+        <div class="second"></div>
+    </div>
+
+
+    <div class="winner"></div>
+</body>
+<script>
+    let p1 = true;
+    let p2 = false;
+    let box = document.querySelectorAll(".second")
+    let click = [];
+    click.length = 9
+    click.fill(true);
+    let win = [
+        [-1, -1, -1],
+        [-1, -1, -1],
+        [-1, -1, -1]
+    ]
+
+    function gameReset() {
+        p1 = true; p2 = false
+        for (let i = 0; i < box.length; i++) {
+            box[i].innerHTML = '';
+        }
+        win = [
+            [-1, -1, -1],
+            [-1, -1, -1],
+            [-1, -1, -1]
+        ]
+        winner=0;
+        click.fill(true);
+        
+        document.querySelector('.winner').innerHTML = '';
+    }
+
+
+
+    for (let i = 0; i < box.length; i++) {
+        box[i].addEventListener('click', () => {
+
+
+            if (click[i]) {
+                winFill(i, p1);
+
+
+
+                if (p1) {
+                    box[i].innerHTML = 'X';
+                    box[i].style.color = 'red';
+                    p1 = false;
+                    p2 = true;
+                    click[i] = false;
+                    
+                }
+                
+                else {
+                    box[i].innerHTML = 'O';
+                    box[i].style.color = 'green';
+                    
+                    p1 = true;
+                    p2 = false;
+                    click[i] = false;
+
+                }
+
+                checkWinner();
+
+            }
+        })
+    }
+    function winFill(i, p1) {
+        if (p1)
+            win[Math.floor(i / 3)][i % 3] = 1;
+        else
+        win[Math.floor(i / 3)][i % 3] = 0;
+
+    }
+    let winner = 0;
+    function checkWinner() {
+        if ((win[0][0] == 1 && win[0][1] == 1 && win[0][2] == 1) || (win[0][0] == 0 && win[0][1] == 0 && win[0][2] == 0)) {
+            if (win[0][0] == 1)
+                winner = 1;
+            else
+                winner = 2;
+
+        }
+        else if ((win[1][0] == 1 && win[1][1] == 1 && win[1][2] == 1) || (win[1][0] == 0 && win[1][1] == 0 && win[1][2] == 0)) {
+            if (win[1][0] == 1)
+                winner = 1;
+            else
+                winner = 2;
+
+        }
+        else if ((win[2][0] == 1 && win[2][1] == 1 && win[2][2] == 1) || (win[2][0] == 0 && win[2][1] == 0 && win[2][2] == 0)) {
+            if (win[2][0] == 1)
+                winner = 1;
+            else
+                winner = 2;
+
+        }
+        else if ((win[0][0] == 1 && win[1][0] == 1 && win[2][0] == 1) || (win[0][0] == 0 && win[1][0] == 0 && win[2][0] == 0)) {
+            if (win[0][0] == 1)
+                winner = 1;
+            else
+                winner = 2;
+
+        }
+        else if ((win[0][1] == 1 && win[1][1] == 1 && win[2][1] == 1) || (win[0][1] == 0 && win[1][1] == 0 && win[2][1] == 0)) {
+            if (win[0][1] == 1)
+                winner = 1;
+            else
+                winner = 2;
+
+        }
+        else if ((win[0][2] == 1 && win[1][2] == 1 && win[2][2] == 1) || (win[0][2] == 0 && win[1][2] == 0 && win[2][2] == 0)) {
+            if (win[0][2] == 1)
+                winner = 1;
+            else
+                winner = 2;
+
+        }
+        else if ((win[0][0] == 1 && win[1][1] == 1 && win[2][2] == 1) || (win[0][0] == 0 && win[1][1] == 0 && win[2][2] == 0)) {
+            if (win[0][0] == 1)
+                winner = 1;
+            else
+                winner = 2;
+
+        }
+        else if ((win[0][2] == 1 && win[1][1] == 1 && win[2][0] == 1) || (win[0][2] == 0 && win[1][1] == 0 && win[2][0] == 0)) {
+            if (win[0][2] == 1)
+                winner = 1;
+            else
+                winner = 2;
+
+        }
+
+
+        if (winner != 0) {
+            let str = winner == 1 ? "player 1 wins" : "player 2 wins";
+            document.querySelector('.winner').innerHTML = str;
+            setTimeout(gameReset, 3000)
+        }
+        if(!click.includes(true)){
+        let str = "no one wins";
+            document.querySelector('.winner').innerHTML = str;}
+    }
+
+
+</script>
+
+</html>
